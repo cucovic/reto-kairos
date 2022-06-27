@@ -14,3 +14,11 @@ resource "aws_s3_bucket_acl" "mapfre-gitops-jamapla" {
   bucket = aws_s3_bucket.mapfre-gitops-jamapla.id
   acl    = "public-read"
 }
+
+resource "aws_s3_bucket_object" "object" {
+  bucket = aws_s3_bucket.mapfre-gitops-jamapla.id
+  key    = "profile"
+  acl    = "public-read"
+  source = "./index.html"
+  etag = filemd5("./index.html")
+}
