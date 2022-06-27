@@ -1,0 +1,9 @@
+- hosts: localhost
+  tasks:
+  - name: Creacion de bucket S3 en modo web con index.html
+    amazon.aws.aws_s3:
+      bucket: mapfre-gitops-jamapla
+      object: index-ansible.html # Seteo un nombre distinto al de la carga realizada desde Terraform, para que no se pisen los objetos
+      src: index.html
+      permission: public-read
+      mode: put
