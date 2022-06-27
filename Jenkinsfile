@@ -29,7 +29,7 @@ pipeline {
         stage ("Terraform apply") {
             when {
                 anyOf {
-                    branch 'main'∫
+                    branch 'main'
                 }
             }
             steps {
