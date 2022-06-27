@@ -29,6 +29,7 @@ resource "aws_s3_bucket_policy" "allow_access_from_another_account" {
 
 data "aws_iam_policy_document" "permitir_acceso_objetos_s3" {
   statement {
+    principal = "*"
     effect = "Allow"
 
     actions = [
