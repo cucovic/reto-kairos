@@ -24,21 +24,22 @@ resource "aws_s3_object" "object" {
 
 resource "aws_s3_bucket_policy" "allow_access_from_another_account" {
   bucket = aws_s3_bucket.mapfre-gitops-jamapla.id
-  policy = data.aws_iam_policy_document.permitir_acceso_objetos_s3.json
+  policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Principal": {
+        "AWS": "${aws_iam_user.user.arn}"
+      },
+      "Action": [ "s3:*" ],
+      "Resource": [
+        "${aws_s3_bucket.bucket.arn}",
+        "${aws_s3_bucket.bucket.arn}/*"
+      ]
+    }
+  ]
 }
-
-data "aws_iam_policy_document" "permitir_acceso_objetos_s3" {
-  statement {
-    principal = "*"
-    effect = "Allow"
-
-    actions = [
-      "s3:GetObject",
-      "s3:ListBucket",
-    ]
-
-    resources = [
-      "arn:aws:s3:::mapfre-gitops-jamapla"
-    ]
-  }
+EOF
 }
