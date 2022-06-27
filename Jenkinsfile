@@ -6,33 +6,35 @@ pipeline {
 	AWS_SECRET_ACCESS_KEY = credentials('jamapla-aws-pass')
     }
 
-    stage ("Terraform init") {
-        steps {
-            sh "terraform init"
+    stages {
+        stage ("Terraform init") {
+            steps {
+                sh "terraform init"
+            }
         }
-    }
 
-    stage ("Terraform plan") {
-        when {
-            not {
-                anyOf {
-                    branch 'main'
+        stage ("Terraform plan") {
+            when {
+                not {
+                    anyOf {
+                        branch 'main'
+                    }
                 }
             }
-        }
-        steps {
-            sh "terraform plan"
-        }
-    }
-
-    stage ("Terraform apply") {
-        when {
-            anyOf {
-                branch 'main'
+            steps {
+                sh "terraform plan"
             }
         }
-        steps {
-            sh "terraform apply --auto-approve"
+
+        stage ("Terraform apply") {
+            when {
+                anyOf {
+                    branch 'main'∫
+                }
+            }
+            steps {
+                sh "terraform apply --auto-approve"
+            }
         }
     }
 
