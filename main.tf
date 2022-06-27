@@ -15,10 +15,9 @@ resource "aws_s3_bucket_acl" "mapfre-gitops-jamapla" {
   acl    = "public-read"
 }
 
-resource "aws_s3_bucket_object" "object" {
+resource "aws_s3_object" "object" {
   bucket = aws_s3_bucket.mapfre-gitops-jamapla.id
-  key    = "profile"
-  acl    = "public-read"
+  key    = "index.html"
   source = "./index.html"
   etag = filemd5("./index.html")
 }
